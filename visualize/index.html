@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Circle and Rectangle Collision Detection</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+
+  <script>
+    // Initialize canvas and context
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Initialize circle and rectangle
+    const circle = {
+      x: 50,
+      y: 50,
+      radius: 20,
+      velocity: { x: 1, y: 1 }
+    };
+
+    const rectangle = {
+      x: 200,
+      y: 200,
+      width: 50,
+      height: 100
+    };
+
+    // Draw circle and rectangle
+    function drawShapes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+      ctx.fillStyle = "blue";
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+      ctx.fillStyle = "green";
+      ctx.fill();
+      ctx.closePath();
+    }
+
+
+ 
+
+
+
+    function update() {
+  
+      // Initialize collision detection conditions
+      const collidedYBottom = circle.y + circle.radius >= rectangle.y;
+      const collidedYTop = circle.y - circle.radius <= rectangle.y + rectangle.height;
+      const collidedXRight = circle.x + circle.radius >= rectangle.x;
+      const collidedXLeft = circle.x - circle.radius <= rectangle.x + rectangle.width;
+
+
+          // Check if circle has collided with rectangle
+          if (circle.y - circle.radius <= rectangle.y + rectangle.height &&
+        circle.y + circle.radius >= rectangle.y &&
+        circle.x - circle.radius <= rectangle.x + rectangle.width &&
+        circle.x + circle.radius >= rectangle.x) {
+        // Stop circle movement
+        circle.velocity.x = 0;
+        circle.velocity.y = 0;
+      } else {
+        // Update circle position
+        circle.x += circle.velocity.x;
+        circle.y += circle.velocity.y;
+      }
+     
+  
+      // Draw shapes and coordinates
+      drawShapes();
+      drawCoordinates();
+    }
+
+
+
+
+    // Draw coordinates of circle and rectangle
+    function drawCoordinates() {
+      ctx.font = "12px Arial";
+      ctx.fillStyle = "black";
+
+      // Draw circle coordinates
+      ctx.beginPath();
+      ctx.arc(circle.x, circle.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.fillText(`Circle: (${circle.x.toFixed(2)}, ${circle.y.toFixed(2)})`, circle.x + circle.radius + 5, circle.y);
+
+      // Draw rectangle coordinates
+      ctx.beginPath();
+      ctx.arc(rectangle.x, rectangle.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.fillText(`Rectangle: (${rectangle.x.toFixed(2)}, ${rectangle.y.toFixed(2)})`, rectangle.x + rectangle.width + 5, rectangle.y);
+    }
+
+    // Call update function every 10 milliseconds
+    setInterval(update, 10);
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Distance between two points</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const point1 = { x: 50, y: 50 };
+      const point2 = { x: 150, y: 150 };
+
+      // Draw the points
+      ctx.fillStyle = 'blue';
+      ctx.beginPath();
+      ctx.arc(point1.x, point1.y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(point2.x, point2.y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // Draw the line between the points
+      ctx.beginPath();
+      ctx.moveTo(point1.x, point1.y);
+      ctx.lineTo(point2.x, point2.y);
+      ctx.stroke();
+
+      // Calculate the distance
+      const distance = Math.hypot(point2.x - point1.x, point2.y - point1.y);
+
+      // Draw the distance text
+      ctx.fillStyle = 'black';
+      ctx.font = '16px Arial';
+      ctx.fillText(`Distance: ${distance.toFixed(2)}`, 10, 20);
+    </script>
+  </body>
+</html> -->
